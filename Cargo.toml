@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Christian Mösl <christian.moesl@live.at>", "Fabian Nedoluha <monster@onders.org>"]
 edition = "2018"
 description = "Monster is a symbolic execution engine for 64-bit RISC-V code"
+links = "boolector"
 
 [dependencies]
 goblin = "0.2"
