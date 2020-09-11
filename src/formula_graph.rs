@@ -2,7 +2,7 @@ use crate::elf::ElfMetadata;
 use crate::iterator::ForEachUntilSome;
 use byteorder::{ByteOrder, LittleEndian};
 use core::fmt;
-use petgraph::graph::NodeIndex;
+pub use petgraph::graph::NodeIndex;
 use petgraph::Graph;
 use riscv_decode::types::*;
 use riscv_decode::Instruction;
@@ -50,6 +50,16 @@ pub enum ArgumentSide {
     Rhs,
 }
 
+impl ArgumentSide {
+    #[allow(dead_code)]
+    pub fn other(&self) -> Self {
+        match self {
+            ArgumentSide::Lhs => ArgumentSide::Rhs,
+            ArgumentSide::Rhs => ArgumentSide::Lhs,
+        }
+    }
+}
+
 #[allow(dead_code)]
 #[derive(Clone, Copy, Eq, Hash, PartialEq)]
 pub struct Instr {
@@ -68,7 +78,7 @@ pub struct Instr {
 }
 
 impl Instr {
-    fn new(instruction: Instruction) -> Self {
+    pub fn new(instruction: Instruction) -> Self {
         Self { instruction }
     }
 }
@@ -86,7 +96,7 @@ pub struct Const {
 }
 
 impl Const {
-    fn new(value: u64) -> Self {
+    pub fn new(value: u64) -> Self {
         Self { value }
     }
 }
@@ -104,7 +114,7 @@ pub struct Input {
 }
 
 impl Input {
-    fn new(name: String) -> Self {
+    pub fn new(name: String) -> Self {
         Self { name }
     }
 }
@@ -115,9 +125,10 @@ impl fmt::Debug for Input {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Clone, Eq, Hash, PartialEq)]
 pub enum BooleanFunction {
-    // Equals,
+    Equals,
     GreaterThan,
 }
 
@@ -129,7 +140,7 @@ pub struct Constrain {
 }
 
 impl Constrain {
-    fn new(name: String, op: BooleanFunction) -> Self {
+    pub fn new(name: String, op: BooleanFunction) -> Self {
         Self { name, op }
     }
 }

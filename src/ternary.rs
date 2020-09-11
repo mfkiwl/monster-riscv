@@ -1,4 +1,4 @@
-//! # Handle ternary bit vectors
+#![allow(dead_code)]
 
 use crate::bitvec::BitVector;
 
@@ -21,7 +21,7 @@ impl TernaryBitVector {
 
     /// verifies that all constant bits of a ternary bit vector match a bit vector
     #[allow(dead_code)]
-    pub fn mcb(&self, other: &BitVector) -> bool {
+    pub fn mcb(&self, other: BitVector) -> bool {
         (self.xhi & other.value == other.value) && (self.xlo | other.value == other.value)
     }
 }
